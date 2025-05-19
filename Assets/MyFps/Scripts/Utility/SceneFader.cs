@@ -14,18 +14,30 @@ namespace MyDefence
 
         //애니메이션 커브
         public AnimationCurve curve;
+
+        //페이드인 딜레이 타임
+        [SerializeField]private float fadeInDelay = 0f;
         #endregion
 
         private void Start()
         {
+            //초기화
+            img.color = new Color(0f, 0f, 0f, 1f);
+
             //페이드인
-            StartCoroutine(FadeIn());
+            //StartCoroutine(FadeIn(fadeInDelay));
         }
 
         //코루틴으로 구현
         //FadeIn : 1초동안 : 검정에서 완전 투명으로 (이미지 알파값 a:1 -> a:0)
-        IEnumerator FadeIn()
+        IEnumerator FadeIn(float delayTime = 0f)
         {
+            //3초 지연
+            if(delayTime > 0)
+            {
+                yield return new WaitForSeconds(delayTime);
+            }
+
             float t = 1f;
 
             while(t > 0)
@@ -73,6 +85,10 @@ namespace MyDefence
             {
                 SceneManager.LoadScene(sceneName);
             }
+        }
+        public void FadeStart(float delayTime)
+        {
+            StartCoroutine(FadeIn(delayTime));
         }
 
         //다른 씬으로 이동시 호출

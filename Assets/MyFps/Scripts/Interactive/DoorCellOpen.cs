@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using MyDefence;
 
 namespace MyFps
 {
@@ -14,6 +15,12 @@ namespace MyFps
         public GameObject actionUI;
         public TextMeshProUGUI actionText;
 
+        //크로스헤어
+        public GameObject crossHairUI;
+
+        //페이더
+        private SceneFader fader;
+
         [SerializeField]public string action = "Open The Door";
 
         //애니메이션
@@ -24,6 +31,11 @@ namespace MyFps
         #endregion
 
         #region Unity Event Method
+        private void Start()
+        {
+            //fader.FadeStart(3f);
+            fader.FadeTo("PlayScene");
+        }
         private void Update()
         {
             theDistance = PlayerCasting.distanceFromTarget;
@@ -32,6 +44,7 @@ namespace MyFps
         {
             if(theDistance <= 2)
             {
+                crossHairUI.SetActive(true);
                 ShowActionUI();
 
                 //ToDo : New Input System 구현
@@ -51,6 +64,8 @@ namespace MyFps
         }
         private void OnMouseExit()
         {
+            crossHairUI.SetActive(false);
+
             HideActionUI();
         }
         #endregion
@@ -58,11 +73,13 @@ namespace MyFps
         private void ShowActionUI()
         {
             actionUI.SetActive(true);
+
             actionText.text = action;
         }
         private void HideActionUI()
         {
             actionUI.SetActive(false);
+            
             actionText.text = " ";
         }
         #endregion
