@@ -23,6 +23,9 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+
             StartCoroutine(SequencePlay());
         }
 
@@ -37,7 +40,7 @@ namespace MyFps
             sequenceText.text = sequence.ToString();
 
             //3. 3초후에 시나리오 텍스트 없어진다
-            yield return new WaitForSeconds(6f);
+            yield return new WaitForSeconds(3f);
 
             sequenceText.text = "";
 

@@ -5,23 +5,11 @@ using MyDefence;
 namespace MyFps
 {
     //문열기 인터렉티브 액션 구현
-    public class DoorCellOpen : MonoBehaviour
+    public class DoorCellOpen : Interactive
     {
         #region Variables
-        //문과 플레이어와의 거리
-        private float theDistance;
-
-        //액션 UI
-        public GameObject actionUI;
-        public TextMeshProUGUI actionText;
-
-        //크로스헤어
-        public GameObject crossHairUI;
-
         //페이더
         private SceneFader fader;
-
-        [SerializeField]public string action = "Open The Door";
 
         //애니메이션
         public Animator animator;
@@ -35,10 +23,6 @@ namespace MyFps
         {
             //fader.FadeStart(3f);
             fader.FadeTo("PlayScene");
-        }
-        private void Update()
-        {
-            theDistance = PlayerCasting.distanceFromTarget;
         }
         private void OnMouseOver()
         {
@@ -67,20 +51,6 @@ namespace MyFps
             crossHairUI.SetActive(false);
 
             HideActionUI();
-        }
-        #endregion
-        #region Custom Method
-        private void ShowActionUI()
-        {
-            actionUI.SetActive(true);
-
-            actionText.text = action;
-        }
-        private void HideActionUI()
-        {
-            actionUI.SetActive(false);
-            
-            actionText.text = " ";
         }
         #endregion
     }
