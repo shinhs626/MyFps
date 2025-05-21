@@ -10,27 +10,13 @@ namespace MyFps
         public GameObject theArrow;
         #endregion
 
-        #region Unity Event Method
-        private void OnMouseOver()
+        #region Custom Method
+        protected override void DoAction()
         {
-            if(theDistance <= 2)
-            {
-                crossHairUI.SetActive(true);
-                ShowActionUI();
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    HideActionUI();
-                    this.gameObject.SetActive(false);
-                    realPistol.SetActive(true);
-                    theArrow.SetActive(false);
-                    //Debug.Log("Pick Up Pistol");
-                }
-            }
-        }
-        private void OnMouseExit()
-        {
-            crossHairUI.SetActive(false);
-            HideActionUI();
+            //무기획득, 충돌체 제거
+            realPistol.SetActive(true);
+            theArrow.SetActive(false);
+            this.gameObject.SetActive(false);   //fake pistol 및 충돌체 제거  
         }
         #endregion
     }

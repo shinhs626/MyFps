@@ -25,6 +25,30 @@ namespace MyFps
         {
             theDistance = PlayerCasting.distanceFromTarget;
         }
+        private void OnMouseOver()
+        {
+            crossHairUI.SetActive(true);
+
+            if (theDistance <= 2f)
+            {
+                ShowActionUI();
+
+                //TODO : New Input System 대체 구현
+                //키입력 체크
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    //UI 숨기기
+                    HideActionUI();
+
+                    //액션
+                    DoAction();
+                }
+            }
+            else
+            {
+                HideActionUI();
+            }
+        }
         private void OnMouseExit()
         {
             crossHairUI.SetActive(false);
@@ -44,6 +68,10 @@ namespace MyFps
             actionUI.SetActive(false);
 
             actionText.text = " ";
+        }
+        protected virtual void DoAction()
+        {
+
         }
         #endregion
     }

@@ -17,40 +17,12 @@ namespace MyFps
         //애니 파라미터 스트링
         private string paramIsOpen = "IsOpen";
         #endregion
-
-        #region Unity Event Method
-        private void Start()
+        #region Custom Method
+        protected override void DoAction()
         {
-            //fader.FadeStart(3f);
-            fader.FadeTo("PlayScene");
-        }
-        private void OnMouseOver()
-        {
-            if(theDistance <= 2)
-            {
-                crossHairUI.SetActive(true);
-                ShowActionUI();
-
-                //ToDo : New Input System 구현
-                //키 입력 체크
-                if (Input.GetKeyDown(KeyCode.E))
-                {
-                    //UI를 숨기고 문열고
-                    HideActionUI();
-                    animator.SetBool(paramIsOpen, true);
-                    this.GetComponent<BoxCollider>().enabled = false;
-                }
-            }
-            else
-            {
-                HideActionUI();
-            }
-        }
-        private void OnMouseExit()
-        {
-            crossHairUI.SetActive(false);
-
-            HideActionUI();
+            //문열고, 충돌체 제거
+            animator.SetBool(paramIsOpen, true);        //문 여는 애니메이션 연출
+            this.GetComponent<BoxCollider>().enabled = false; //문 충돌체 제거
         }
         #endregion
     }

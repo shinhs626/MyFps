@@ -8844,7 +8844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionUI: {fileID: 749503157}
   actionText: {fileID: 297061302}
-  crossHairUI: {fileID: 0}
+  crossHairUI: {fileID: 1629130352}
   action: Pick Up Pistol
   realPistol: {fileID: 67072620}
   theArrow: {fileID: 1765568210}
