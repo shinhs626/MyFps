@@ -96,6 +96,11 @@ namespace My3D
                 Velocity -= Time.deltaTime * accelate;
             }
             Velocity = Mathf.Clamp(Velocity, 0f, 8f);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                animator.SetTrigger("Jump");
+            }
         }
         #endregion
     }
