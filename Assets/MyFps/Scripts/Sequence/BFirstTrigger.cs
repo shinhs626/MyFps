@@ -1,16 +1,20 @@
+using UnityEngine;
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
-using UnityEngine;
 
 namespace MyFps
 {
+    //Ã¹¹øÂ° Æ®¸®°Å ¿¬Ãâ
     public class BFirstTrigger : MonoBehaviour
     {
         #region Variables
-        public GameObject player;
-        public TextMeshProUGUI sequenceText;
+        public GameObject thePlayer;
+
+        //È­»ìÇ¥
         public GameObject theArrow;
+        
+        //½Ã³ª¸®¿À ´ë»ç Ã³¸®
+        public TextMeshProUGUI sequenceText;
 
         [SerializeField]
         private string sequence = "Looks like a weapon on that table";
@@ -19,33 +23,39 @@ namespace MyFps
         #region Unity Event Method
         private void OnTriggerEnter(Collider other)
         {
-            //íŠ¸ë¦¬ê±° í•´ì œ
-            this.GetComponent<BoxCollider>().enabled = false;
-
-            StartCoroutine(SequencePlay());
+            //ÇÃ·¹ÀÌ¾î Ã¼Å©
+            if (other.tag == "Player")
+            {
+                //Æ®¸®°Å ÇØÁ¦
+                this.GetComponent<BoxCollider>().enabled = false;
+                StartCoroutine(SequencePlayer());
+            }
         }
-
         #endregion
 
         #region Custom Method
-        IEnumerator SequencePlay()
+        IEnumerator SequencePlayer()
         {
-            player.SetActive(false);
+            //ÇÃ·¹ÀÌ Ä³¸¯ÅÍ ºñÈ°¼ºÈ­  (ÇÃ·¹ÀÌ ¸ØÃã)
+            thePlayer.SetActive(false);
 
-            //2.í™”ë©´ í•˜ë‹¨ì—ì‹œë‚˜ë¦¬ì˜¤ í…ìŠ¤íŠ¸ í™”ë©´ ì¶œë ¥(3ì´ˆ)
-            sequenceText.text = sequence.ToString();
+            //´ë»ç Ãâ·Â :  "Looks like a weapon on that table."
+            sequenceText.text = sequence;
 
-            //3. 3ì´ˆí›„ì— ì‹œë‚˜ë¦¬ì˜¤ í…ìŠ¤íŠ¸ ì—†ì–´ì§„ë‹¤
+            //1ÃÊ µô·¹ÀÌ
             yield return new WaitForSeconds(1f);
+
+            //È­»ìÇ¥ È°¼ºÈ­
             theArrow.SetActive(true);
-            yield return new WaitForSeconds(1f);
+
+            //2ÃÊ µô·¹ÀÌ
+            yield return new WaitForSeconds(2f);
 
             sequenceText.text = "";
+            //ÇÃ·¹ÀÌ Ä³¸¯ÅÍ È°¼ºÈ­
+            thePlayer.SetActive(true);
 
-            //4.í”Œë ˆì´ì–´ ìºë¦­í„° í™œì„±í™”
-            player.SetActive(true);
         }
         #endregion
     }
-
 }

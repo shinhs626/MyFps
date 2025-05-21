@@ -2,45 +2,46 @@ using UnityEngine;
 
 namespace MyFps
 {
-    //í”Œë ˆì´ì–´ì™€ ì •ë©´ì— ìˆëŠ” ì˜¤ë¸Œì íŠ¸(ì½œë¼ì´ë”) ì™€ì˜ ê±°ë¦¬ë¥¼ êµ¬í•˜ëŠ” í´ë˜ìŠ¤
-    //RayCastë¥¼ ì´ìš©í•œë‹¤
+    //ÇÃ·¹ÀÌ¾î¿Í Á¤¸é¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®(Äİ¶óÀÌ´õ) ¿ÍÀÇ °Å¸®¸¦ ±¸ÇÏ´Â Å¬·¡½º
+    //RayCast¸¦ ÀÌ¿ëÇÑ´Ù
     public class PlayerCasting : MonoBehaviour
     {
         #region Variables
-        //íƒ€ê²Ÿê¹Œì§€ì˜ ê±°ë¦¬
+        //Å¸°Ù±îÁöÀÇ °Å¸®
         public static float distanceFromTarget;
-        public float toTarget;  //ë””ë²„ê¹…ìš©
+        public float toTarget;      //ÀÎ½ºÆåÅÍÃ¢ µğ¹ö±ë¿ë
         #endregion
 
         #region Unity Event Method
-
         private void Start()
         {
+            //ÃÊ±âÈ­
             distanceFromTarget = Mathf.Infinity;
             toTarget = distanceFromTarget;
         }
+
         private void Update()
         {
-            //ë ˆì´ì €ë¥¼ ì˜ì•„ ê±°ë¦¬ êµ¬í•˜ê¸°
-            RaycastHit hit; //ë ˆì´ hit ì •ë³´ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
-
-            if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
+            //·¹ÀÌ¸¦ ½î¾Æ °Å¸® ±¸ÇÏ±â
+            RaycastHit hit; //·¹ÀÌhit Á¤º¸¸¦ ÀúÀåÇÏ´Â º¯¼ö
+            
+            if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit))
             {
                 distanceFromTarget = hit.distance;
                 toTarget = distanceFromTarget;
             }
+
         }
 
-        //ë ˆì´ ê¸°ì¦ˆëª¨ ê·¸ë¦¬ê¸°, ê¸¸ì´ 100ì¸ ê¸°ì¦ˆëª¨ ê·¸ë¦¬ê¸°
+        //·¹ÀÌ ±âÁî¸ğ ±×¸®±â, ±æÀÌ 100ÀÎ ·¹ÀÌ ±âÁî¸ğ¸¦ ±×¸®±â
         private void OnDrawGizmosSelected()
         {
             RaycastHit hit;
             float maxDistance = 100f;
-
             bool isHit = Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, maxDistance);
 
             Gizmos.color = Color.red;
-            if (isHit)
+            if(isHit)
             {
                 Gizmos.DrawRay(transform.position, transform.forward * hit.distance);
             }
@@ -51,5 +52,4 @@ namespace MyFps
         }
         #endregion
     }
-
 }

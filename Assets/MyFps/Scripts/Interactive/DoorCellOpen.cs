@@ -1,30 +1,32 @@
 using UnityEngine;
 using TMPro;
-using MyDefence;
 
 namespace MyFps
 {
-    //ë¬¸ì—´ê¸° ì¸í„°ë ‰í‹°ë¸Œ ì•¡ì…˜ êµ¬í˜„
+    //¹®¿­±â ÀÎÅÍ·ºÆ¼ºê ¾×¼Ç ±¸Çö
     public class DoorCellOpen : Interactive
     {
-        #region Variables
-        //í˜ì´ë”
-        private SceneFader fader;
-
-        //ì• ë‹ˆë©”ì´ì…˜
+        #region Variables        
+        //¾Ö´Ï¸ŞÀÌ¼Ç
         public Animator animator;
+        //¾Ö´Ï ÆÄ¶ó¹ÌÅÍ ½ºÆ®¸µ
+        private string  paramIsOpen = "IsOpen";
 
-        //ì• ë‹ˆ íŒŒë¼ë¯¸í„° ìŠ¤íŠ¸ë§
-        private string paramIsOpen = "IsOpen";
+        //¹®¿©´Â ¼Ò¸®
+        public AudioSource audioSource;
         #endregion
+
         #region Custom Method
         protected override void DoAction()
         {
-            //ë¬¸ì—´ê³ , ì¶©ëŒì²´ ì œê±°
-            animator.SetBool(paramIsOpen, true);        //ë¬¸ ì—¬ëŠ” ì• ë‹ˆë©”ì´ì…˜ ì—°ì¶œ
-            this.GetComponent<BoxCollider>().enabled = false; //ë¬¸ ì¶©ëŒì²´ ì œê±°
+            //¹®¿­°í, Ãæµ¹Ã¼ Á¦°Å
+            animator.SetBool(paramIsOpen, true);        //¹® ¿©´Â ¾Ö´Ï¸ŞÀÌ¼Ç ¿¬Ãâ
+
+            //¹®¿©´Â ¼Ò¸®
+            audioSource.Play();
+
+            this.GetComponent<BoxCollider>().enabled = false; //¹® Ãæµ¹Ã¼ Á¦°Å
         }
         #endregion
     }
-
 }

@@ -1,32 +1,41 @@
-using System.Collections;
 using UnityEngine;
+using System.Collections;
+using UnityEngine.Experimental.GlobalIllumination;
 
 namespace Sample
 {
     public class LightFlame : MonoBehaviour
     {
         #region Variables
-        [SerializeField] private Animator targetAnimator;  // 다른 오브젝트 Animator 참조
+        //애니메이터
+        public Animator animator;
 
-        [SerializeField] private string flameParamName = "LightMod";  // Animator 파라미터 이름
+        //애니메이션 모드
+        private int lightMode = 0;
         #endregion
 
         private void Start()
         {
-            if (targetAnimator == null)
-            {
-                Debug.LogError($"{gameObject.name} 에 LightFlame 스크립트에서 targetAnimator가 할당되지 않았습니다.");
-                this.enabled = false;
-                return;
-            }
-
-            InvokeRepeating(nameof(Flame), 1f, 1f);
+            //초기화
+            lightMode = 0;
         }
 
-        public void Flame()
+        private void Update()
         {
-            int randomIndex = Random.Range(1, 4);   // 1~3
-            targetAnimator.SetInteger(flameParamName, randomIndex);
+            if(lightMode == 0)
+            {
+                StartCoroutine(LightAnimation());
+            }
+        }
+
+        IEnumerator LightAnimation()
+        {
+            lightMode = Random.Range(1, 4); //1, 2, 3
+            animator.SetInteger("LightMode", lightMode);
+
+            //0.99초 대기
+            yield return new WaitForSeconds(0.99f);
+            lightMode = 0;
         }
     }
 }

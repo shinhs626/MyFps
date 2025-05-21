@@ -1,19 +1,19 @@
-using MyDefence;
-using System.Collections;
-using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 namespace MyFps
 {
-    //í”Œë ˆì´ ì”¬ ì˜¤í”„ë‹ ì—°ì¶œ
+    //ÇÃ·¹ÀÌ ¾À ¿ÀÇÁ´× ¿¬Ãâ
     public class AOpenning : MonoBehaviour
     {
         #region Variables
-        public GameObject player;
-
+        //ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®
+        public GameObject thePlayer;
+        //ÆäÀÌ´õ °´Ã¼
         public SceneFader fader;
 
+        //½Ã³ª¸®¿À ´ë»ç Ã³¸®
         public TextMeshProUGUI sequenceText;
 
         [SerializeField]
@@ -23,31 +23,35 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
+            //Ä¿¼­ Á¦¾î
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
 
+            //¿ÀÇÁ´× ¿¬Ãâ ½ÃÀÛ
             StartCoroutine(SequencePlay());
         }
+        #endregion
 
+        #region Custom Method
+        //¿ÀÇÁ´× ¿¬Ãâ ÄÚ·çÆ¾ ÇÔ¼ö
         IEnumerator SequencePlay()
         {
-            player.SetActive(false);
+            //0.ÇÃ·¹ÀÌ Ä³¸¯ÅÍ ºñ È°¼ºÈ­
+            thePlayer.SetActive(false);
 
-            //1.í˜ì´ë“œ ì¸ ì—°ì¶œ
+            //1. ÆäÀÌµåÀÎ ¿¬Ãâ (1ÃÊ ´ë±âÈÄ ÆäÀÎµåÀÎ È¿°ú)
             fader.FadeStart(1f);
 
-            //2.í™”ë©´ í•˜ë‹¨ì—ì‹œë‚˜ë¦¬ì˜¤ í…ìŠ¤íŠ¸ í™”ë©´ ì¶œë ¥(3ì´ˆ)
-            sequenceText.text = sequence.ToString();
+            //2.È­¸é ÇÏ´Ü¿¡ ½Ã³ª¸®¿À ÅØ½ºÆ® È­¸é Ãâ·Â(3ÃÊ)
+            sequenceText.text = sequence;
 
-            //3. 3ì´ˆí›„ì— ì‹œë‚˜ë¦¬ì˜¤ í…ìŠ¤íŠ¸ ì—†ì–´ì§„ë‹¤
+            //3. 3ÃÊÈÄ¿¡ ½Ã³ª¸®¿À ÅØ½ºÆ® ¾ø¾îÁø´Ù
             yield return new WaitForSeconds(3f);
-
             sequenceText.text = "";
 
-            //4.í”Œë ˆì´ì–´ ìºë¦­í„° í™œì„±í™”
-            player.SetActive(true);
+            //4.ÇÃ·¹ÀÌ Ä³¸¯ÅÍ È°¼ºÈ­
+            thePlayer.SetActive(true);
         }
         #endregion
     }
-
 }

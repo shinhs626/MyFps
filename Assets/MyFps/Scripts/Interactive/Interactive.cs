@@ -3,44 +3,50 @@ using UnityEngine;
 
 namespace MyFps
 {
-    //ì¸í„°ë ‰í‹°ë¸Œ ì•¡ì…˜ì˜ ë¶€ëª¨ í´ë˜ìŠ¤
+    //ÀÎÅÍ·¢Æ¼ºê ¾×¼ÇÀÇ ºÎ¸ğ Å¬·¡½º
     public class Interactive : MonoBehaviour
     {
         #region Variables
-        //ë¬¸ê³¼ í”Œë ˆì´ì–´ì™€ì˜ ê±°ë¦¬
+        //¹®°ú ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸®
         protected float theDistance;
 
-        //ì•¡ì…˜ UI
+        //¾×¼Ç UI
         public GameObject actionUI;
         public TextMeshProUGUI actionText;
 
-        //í¬ë¡œìŠ¤í—¤ì–´
-        public GameObject crossHairUI;
+        //Å©·Î½ºÇì¾î
+        public GameObject extraCross;
 
-        [SerializeField] protected string action = "Do Action";
+        [SerializeField]
+        protected string action = "Do Interactive Action";
         #endregion
 
         #region Unity Event Method
-        protected void Update()
+        private void Update()
         {
+            //¹®°ú ÇÃ·¹ÀÌ¾î¿ÍÀÇ °Å¸® °¡Á®¿À±â
             theDistance = PlayerCasting.distanceFromTarget;
         }
+
         private void OnMouseOver()
         {
-            crossHairUI.SetActive(true);
+            extraCross.SetActive(true);
 
             if (theDistance <= 2f)
             {
                 ShowActionUI();
 
-                //TODO : New Input System ëŒ€ì²´ êµ¬í˜„
-                //í‚¤ì…ë ¥ ì²´í¬
+                //TODO : New Input System ´ëÃ¼ ±¸Çö
+                //Å°ÀÔ·Â Ã¼Å©
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    //UI ìˆ¨ê¸°ê¸°
+                    //
+                    extraCross.SetActive(false);
+
+                    //UI ¼û±â±â
                     HideActionUI();
 
-                    //ì•¡ì…˜
+                    //¾×¼Ç
                     DoAction();
                 }
             }
@@ -49,31 +55,34 @@ namespace MyFps
                 HideActionUI();
             }
         }
+
         private void OnMouseExit()
         {
-            crossHairUI.SetActive(false);
-
+            extraCross.SetActive(false);
             HideActionUI();
         }
         #endregion
+
         #region Custom Method
+        //Action UI º¸¿©ÁÖ±â
         protected void ShowActionUI()
         {
             actionUI.SetActive(true);
-
             actionText.text = action;
         }
+
+        //Action UI ¼û±â±â
         protected void HideActionUI()
         {
             actionUI.SetActive(false);
-
-            actionText.text = " ";
+            actionText.text = "";
         }
+
+        //¾×¼Ç ÇÔ¼ö
         protected virtual void DoAction()
         {
 
         }
         #endregion
     }
-
 }

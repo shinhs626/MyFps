@@ -3,22 +3,24 @@ using UnityEngine;
 
 namespace MyFps
 {
+    //¾ÆÀÌÅÛ(±ÇÃÑ) È¹µæ ÀÎÅÍ·¢Æ¼ºê ±¸Çö
     public class PickupPistol : Interactive
     {
-        #region Variables
+        #region Variables        
+        //ÀÎÅÍ·¢Æ¼ºê ¾×¼Ç ¿¬Ãâ
         public GameObject realPistol;
         public GameObject theArrow;
         #endregion
 
-        #region Custom Method
+        #region Custom Method  
         protected override void DoAction()
         {
-            //ë¬´ê¸°íšë“, ì¶©ëŒì²´ ì œê±°
+            //¹«±âÈ¹µæ, Ãæµ¹Ã¼ Á¦°Å
             realPistol.SetActive(true);
             theArrow.SetActive(false);
-            this.gameObject.SetActive(false);   //fake pistol ë° ì¶©ëŒì²´ ì œê±°  
+
+            this.gameObject.SetActive(false);   //fake pistol ¹× Ãæµ¹Ã¼ Á¦°Å                    
         }
         #endregion
     }
-
 }

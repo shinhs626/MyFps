@@ -6,56 +6,56 @@ namespace MyFps
     public class PlayerController : MonoBehaviour
     {
         #region Variables
-        //ì°¸ì¡°
+        //ÂüÁ¶
         private CharacterController controller;
 
-        //ì…ë ¥ - ì´ë™
+        //ÀÔ·Â - ÀÌµ¿
         private Vector2 inputMove;
 
-        //ì´ë™
+        //ÀÌµ¿
         [SerializeField]
         private float moveSpeed = 10f;
 
-        //ì¤‘ë ¥
+        //Áß·Â
         private float gravity = -9.81f;
         [SerializeField]
-        private Vector3 velocity;       //ì¤‘ë ¥ ê³„ì‚°ì— ì˜í•œ ì´ë™ ì†ë„
+        private Vector3 velocity;       //Áß·Â °è»ê¿¡ ÀÇÇÑ ÀÌµ¿ ¼Óµµ
 
-        //ê·¸ë¼ìš´ë“œ ì²´í¬
-        public Transform groundCheck;   //ë°œ ë°”ë‹¥ ìœ„ì¹˜
-        [SerializeField] private float checkRange = 0.2f;    //ì²´í¬ í•˜ëŠ” êµ¬ì˜ ë°˜ê²½
-        [SerializeField] private LayerMask groundMask;       //ê·¸ë¼ìš´ë“œ ë ˆì´ì–´ íŒë³„
+        //±×¶ó¿îµå Ã¼Å©
+        public Transform groundCheck;   //¹ß ¹Ù´Ú À§Ä¡
+        [SerializeField] private float checkRange = 0.2f;    //Ã¼Å© ÇÏ´Â ±¸ÀÇ ¹İ°æ
+        [SerializeField] private LayerMask groundMask;       //±×¶ó¿îµå ·¹ÀÌ¾î ÆÇº°
 
-        //ì í”„ ë†’ì´
+        //Á¡ÇÁ ³ôÀÌ
         [SerializeField] private float jumpHeight = 1f;
         #endregion
 
         #region Unity Event Method
         private void Start()
         {
-            //ì°¸ì¡°
+            //ÂüÁ¶
             controller = this.GetComponent<CharacterController>();
         }
 
         private void Update()
         {
-            //ë•…ì— ìˆìœ¼ë©´
+            //¶¥¿¡ ÀÖÀ¸¸é
             bool isGrounded = GroundCheck();
             if (isGrounded && velocity.y < 0f)
             {
                 velocity.y = -10f;
             }
 
-            //ë°©í–¥
-            //Globalì¶• ì´ë™
+            //¹æÇâ
+            //GlobalÃà ÀÌµ¿
             //Vector3 moveDir = Vector3.right * inputMove.x + Vector3.forward * inputMove.y;
-            //Localì¶• ì´ë™
+            //LocalÃà ÀÌµ¿
             Vector3 moveDir = transform.right * inputMove.x + transform.forward * inputMove.y;
 
-            //ì´ë™
+            //ÀÌµ¿
             controller.Move(moveDir * Time.deltaTime * moveSpeed);
 
-            //ì¤‘ë ¥ì— ë”°ë¥¸ yì¶• ì´ë™
+            //Áß·Â¿¡ µû¸¥ yÃà ÀÌµ¿
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
 
@@ -63,7 +63,7 @@ namespace MyFps
         #endregion
 
         #region Custom Method
-        //Input ì‹œìŠ¤í…œì— ë“±ë¡í•  í•¨ìˆ˜
+        //Input ½Ã½ºÅÛ¿¡ µî·ÏÇÒ ÇÔ¼ö
         public void OnMove(InputAction.CallbackContext context)
         {
             inputMove = context.ReadValue<Vector2>();
@@ -73,12 +73,12 @@ namespace MyFps
         {
             if (context.started && GroundCheck())
             {
-                //ì í”„ ë†’ì´ë§Œí¼ ë›°ê¸° ìœ„í•œ ì†ë„ êµ¬í•˜ê¸°
+                //Á¡ÇÁ ³ôÀÌ¸¸Å­ ¶Ù±â À§ÇÑ ¼Óµµ ±¸ÇÏ±â
                 velocity.y = Mathf.Sqrt(-2f * gravity * jumpHeight);
             }
         }
 
-        //ê·¸ë¼ìš´ë“œ ì²´í¬
+        //±×¶ó¿îµå Ã¼Å©
         bool GroundCheck()
         {
             return Physics.CheckSphere(groundCheck.position, checkRange, groundMask);
