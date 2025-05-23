@@ -9,10 +9,6 @@ namespace MyFps
         #region Variables
         //참조
         private CharacterController controller;
-        public GameObject damageEffect;
-        public AudioSource hurt01;
-        public AudioSource hurt02;
-        public AudioSource hurt03;
 
         //입력 - 이동
         private Vector2 inputMove;
@@ -33,17 +29,6 @@ namespace MyFps
 
         //점프 높이
         [SerializeField] private float jumpHeight = 1f;
-
-        //체력
-        private float currentHealth;
-        [SerializeField]
-        private float maxHealth = 20;
-
-        private bool isDeath = false;
-
-        //죽음 처리
-        public SceneFader fader;
-        [SerializeField]private string loadToScene = "GameOverScene";
         #endregion
 
         #region Unity Event Method
@@ -52,7 +37,6 @@ namespace MyFps
             //참조
             controller = this.GetComponent<CharacterController>();
 
-            currentHealth = maxHealth;
         }
 
         private void Update()
@@ -100,52 +84,6 @@ namespace MyFps
         bool GroundCheck()
         {
             return Physics.CheckSphere(groundCheck.position, checkRange, groundMask);
-        }
-
-        //플레이어 데미지
-        public void TakeDamage(float damage)
-        {
-            currentHealth -= damage;
-            Debug.Log($"currentHealth: {currentHealth}");
-
-            //데미지 연출 Sfx, Vfx
-            StartCoroutine(DamageEffect());
-
-            if(currentHealth <= 0 && isDeath == false)
-            {
-                Die();
-            }
-        }
-        IEnumerator DamageEffect()
-        {
-            damageEffect.SetActive(true);
-            PlayRandomHurt();
-            yield return new WaitForSeconds(1f);
-            damageEffect.SetActive(false);
-        }
-        private void Die()
-        {
-            isDeath = true;
-
-            //죽음 처리
-            fader.FadeTo(loadToScene);
-        }
-        private void PlayRandomHurt()
-        {
-            int rand = Random.Range(0, 3);
-
-            switch (rand)
-            {
-                case 0:
-                    hurt01.Play();
-                    break;
-                case 1:
-                    hurt02.Play();
-                    break;
-                case 2:
-                    hurt03.Play();
-                    break;
-            }
         }
         #endregion
     }

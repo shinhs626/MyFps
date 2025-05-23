@@ -19962,6 +19962,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireFlash: {fileID: 1038558935}
   fireSound: {fileID: 1908780107}
+  firePoint: {fileID: 1765527901}
+  muzzleFlash: {fileID: 4674972430281742190, guid: 86f2f2febfff8ba4da794bc01ad73dff, type: 3}
+  hitImpactPrefab: {fileID: 3061015098213265699, guid: 8dab52b39bb64d44da252b3dbf79fe59, type: 3}
+  impactForce: 10
+  attackDamage: 5
+  maxAttackDis: 200
 --- !u!33 &2904934504269157831
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20462,13 +20468,14 @@ GameObject:
   - component: {fileID: 5260567527279545254}
   - component: {fileID: 5260567527279545255}
   - component: {fileID: 5260567527279545256}
+  - component: {fileID: 5260567527279545257}
   m_Layer: 0
   m_Name: Robot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &5260567527279545254
 Animator:
   serializedVersion: 7
@@ -20525,11 +20532,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thePlayer: {fileID: 5997727388761173057}
-  maxHealth: 20
   moveSpeed: 1.5
   attackRange: 1.5
   attackDamage: 6.2
   attackTime: 2
+--- !u!114 &5260567527279545257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5260567527279545253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1419fae4f041a24997e81c1d1fe5493, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 20
+  destroyDelay: 5
 --- !u!4 &5417017394897663394
 Transform:
   m_ObjectHideFlags: 0
@@ -20846,6 +20866,7 @@ GameObject:
   - component: {fileID: 6844385037709470354}
   - component: {fileID: 1677931096156821834}
   - component: {fileID: 8502988913237800731}
+  - component: {fileID: 8502988913237800732}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -21890,10 +21911,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1ec602fca32004f951d71fa062d4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageEffect: {fileID: 2078354911}
-  hurt01: {fileID: 75498043}
-  hurt02: {fileID: 1064114148}
-  hurt03: {fileID: 96839143}
   moveSpeed: 5
   velocity: {x: 0, y: 0, z: 0}
   groundCheck: {fileID: 1062945204990315083}
@@ -21902,6 +21919,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   jumpHeight: 1.2
+--- !u!114 &8502988913237800732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6704501311471253685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da3771b44f44a9843b7c9453b30bd05a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageEffect: {fileID: 1038558935}
+  hurt01: {fileID: 75498043}
+  hurt02: {fileID: 1064114148}
+  hurt03: {fileID: 96839143}
   maxHealth: 20
   fader: {fileID: 7937705}
   loadToScene: GameOverScene
