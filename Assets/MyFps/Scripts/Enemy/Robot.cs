@@ -18,6 +18,7 @@ namespace MyFps
         //참조
         private Animator animator;
         public Transform thePlayer; //타겟
+        public AudioSource bgm;
 
         private RobotHealth robotHealth;
 
@@ -152,6 +153,10 @@ namespace MyFps
         private void OnDie()
         {
             ChangeState(RobotState.R_Death);
+            
+            //적인 죽었을때 bgm다시 재생
+            bgm.Play();
+
             this.GetComponent<BoxCollider>().enabled = false;
         }
         #endregion

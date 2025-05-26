@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace MyFps
 {
@@ -61,12 +60,15 @@ namespace MyFps
         #endregion
 
         #region Custom Method
-        public void OnFire(InputAction.CallbackContext context)
+        public void Shoot()
         {
-            if (context.started && isFire == false)    //keydown, buttondown
+            if (isFire)
+                return;
+
+            if (PlayerDataManager.Instance.UseAmmo(1))
             {
                 StartCoroutine(Fire());
-            }
+            }     
         }
 
         IEnumerator Fire()
@@ -99,11 +101,11 @@ namespace MyFps
 
                 if (hit.rigidbody)
                 {
-                    hit.rigidbody.AddForce(-hit.normal * impactForce,ForceMode.Impulse);
-                    }
+                    hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
+                }
 
                 IDamageable damageable = hit.transform.GetComponent<IDamageable>();
-                if(damageable != null)
+                if (damageable != null)
                 {
                     damageable.TakeDamage(attackDamage);
                 }
@@ -116,7 +118,7 @@ namespace MyFps
             {
                 muzzleFlash.Play();
             }
-            
+
             fireSound.Play();
 
             yield return new WaitForSeconds(0.3f);
@@ -124,7 +126,7 @@ namespace MyFps
             if (muzzleFlash)
             {
                 muzzleFlash.Stop();
-            }            
+            }
 
             yield return new WaitForSeconds(0.2f);
 

@@ -16,6 +16,8 @@ namespace MyFps
         //시나리오 대사 처리
         public TextMeshProUGUI sequenceText;
 
+        public AudioSource line03;
+
         [SerializeField]
         private string sequence = "Looks like a weapon on that table";
         #endregion
@@ -41,6 +43,8 @@ namespace MyFps
 
             //대사 출력 :  "Looks like a weapon on that table."
             sequenceText.text = sequence;
+
+            line03.Play();
 
             //1초 딜레이
             yield return new WaitForSeconds(1f);

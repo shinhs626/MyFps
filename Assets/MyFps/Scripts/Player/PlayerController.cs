@@ -9,6 +9,7 @@ namespace MyFps
         #region Variables
         //참조
         private CharacterController controller;
+        public PistolShoot shoot;
 
         //입력 - 이동
         private Vector2 inputMove;
@@ -77,6 +78,17 @@ namespace MyFps
             {
                 //점프 높이만큼 뛰기 위한 속도 구하기
                 velocity.y = Mathf.Sqrt(-2f * gravity * jumpHeight);
+            }
+        }
+        public void OnFire(InputAction.CallbackContext context)
+        {
+            //무장 체크
+            if (PlayerDataManager.Instance.Weapon == WeaponType.None)
+                return;
+
+            if (context.started)    //keydown, buttondown
+            {
+                shoot.Shoot();
             }
         }
 

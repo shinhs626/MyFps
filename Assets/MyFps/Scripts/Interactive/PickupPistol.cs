@@ -10,6 +10,9 @@ namespace MyFps
         //인터랙티브 액션 연출
         public GameObject realPistol;
         public GameObject theArrow;
+        public GameObject ammoUI;
+        public GameObject ammoBox;
+        public GameObject secondTrigger;
         #endregion
 
         #region Custom Method  
@@ -17,6 +20,11 @@ namespace MyFps
         {
             //무기획득, 충돌체 제거
             realPistol.SetActive(true);
+            ammoUI.SetActive(true);
+            ammoBox.SetActive(true);
+            secondTrigger.SetActive(true);
+            //무기 데이터 저장
+            PlayerDataManager.Instance.Weapon = WeaponType.Pistol;
             theArrow.SetActive(false);
 
             this.gameObject.SetActive(false);   //fake pistol 및 충돌체 제거                    

@@ -20,6 +20,8 @@ namespace MyFps
         //적 등장 사운드
         public AudioSource jumpScare;
 
+        public AudioSource bgm01;
+
         //애니메이션 파라미터
         private string isOpen = "IsOpen";
         #endregion
@@ -41,6 +43,9 @@ namespace MyFps
         //트리거 연출 구현
         IEnumerator SequencePlayer()
         {
+            //적이 등장했을때 bgm 멈춤
+            bgm01.Stop();
+
             //문이 열린다
             animator.SetBool(isOpen, true);
 
