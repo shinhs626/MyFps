@@ -44,9 +44,9 @@ namespace MyFps
         IEnumerator SequencePlay()
         {
             //0.플레이 캐릭터 비 활성화
-            thePlayer.SetActive(false);
-            //PlayerInput input = this.GetComponent<PlayerInput>();
-            //input.enabled = false;
+            //thePlayer.SetActive(false);
+            PlayerInput input = thePlayer.GetComponent<PlayerInput>();
+            input.enabled = false;
 
             //1. 페이드인 연출 (1초 대기후 페인드인 효과)
             fader.FadeStart(4f);
@@ -64,11 +64,11 @@ namespace MyFps
             yield return new WaitForSeconds(3f);
             sequenceText.text = "";
 
-            //4.플레이 캐릭터 활성화
-            thePlayer.SetActive(true);
-            //input.enabled = true;
-
             bgm.Play();
+
+            //4.플레이 캐릭터 활성화
+            //thePlayer.SetActive(true);
+            input.enabled = true;   
         }
         #endregion
     }

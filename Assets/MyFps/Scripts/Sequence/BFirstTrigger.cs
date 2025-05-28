@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine.InputSystem;
 
 namespace MyFps
 {
@@ -39,7 +40,9 @@ namespace MyFps
         IEnumerator SequencePlayer()
         {
             //플레이 캐릭터 비활성화  (플레이 멈춤)
-            thePlayer.SetActive(false);
+            //thePlayer.SetActive(false);
+            PlayerInput input = thePlayer.GetComponent<PlayerInput>();
+            input.enabled = false;
 
             //대사 출력 :  "Looks like a weapon on that table."
             sequenceText.text = sequence;
@@ -57,7 +60,8 @@ namespace MyFps
 
             sequenceText.text = "";
             //플레이 캐릭터 활성화
-            thePlayer.SetActive(true);
+            //thePlayer.SetActive(true);
+            input.enabled = true;
 
         }
         #endregion

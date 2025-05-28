@@ -18,7 +18,7 @@ namespace MyFps
         #region Unity Event Method
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("¥Ÿ¿Ω æ¿");
+            //Debug.Log("¥Ÿ¿Ω æ¿");
             animator.SetBool("IsOpen", true);
             bgm.Stop();
             creakyDoor.Play();

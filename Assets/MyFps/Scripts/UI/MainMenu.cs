@@ -50,6 +50,7 @@ namespace MyFps
         public void Quit()
         {
             Debug.Log("³ª°¡±â");
+            Application.Quit();
         }
 
         #endregion
