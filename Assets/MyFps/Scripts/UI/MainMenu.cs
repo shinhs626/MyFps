@@ -5,6 +5,9 @@ namespace MyFps
     public class MainMenu : MonoBehaviour
     {
         #region Variables
+        //참조
+        private AudioManager audioManager;
+
         public SceneFader fader;
 
         [SerializeField]
@@ -14,13 +17,22 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
+            //참조
+            audioManager = AudioManager.Instance;
+
             fader.FadeStart();
+
+            //메뉴 배경음 플레이
+            audioManager.PlayBgm("MenuMusic");
         }
         #endregion
 
         #region Custom Method
         public void MainSceneLoad()
         {
+            //메뉴선택 사운드
+            audioManager.Play("ButtonHit");
+
             fader.FadeTo(mainScene);
         }
         public void LoadScene()

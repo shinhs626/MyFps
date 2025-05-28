@@ -12,7 +12,7 @@ namespace MyFps
         #region Custom Method  
         protected override void DoAction()
         {
-            Debug.Log("≈∫»Ø 7∞≥∏¶ »πµÊ«ﬂ¥Ÿ.");
+            //Debug.Log("≈∫»Ø 7∞≥∏¶ »πµÊ«ﬂ¥Ÿ.");
             KeepAmmo(ammo);
 
             //¿Ã∆Â∆Æ Vfx, Sfx

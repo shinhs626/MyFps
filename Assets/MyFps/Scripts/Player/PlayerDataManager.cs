@@ -44,7 +44,7 @@ namespace MyFps
         public void AddAmmo(int amount)
         {
             ammoCount += amount;
-            Debug.Log("총알 장전 완료" + AmmoCount +"발");
+            //Debug.Log("총알 장전 완료" + AmmoCount +"발");
         }
 
         //ammo 사용 함수
@@ -58,7 +58,7 @@ namespace MyFps
                 
 
             ammoCount -= amount;
-            Debug.Log("총알 발사 완료" + AmmoCount+"발");
+            //Debug.Log("총알 발사 완료" + AmmoCount+"발");
             return true;
         }
         #endregion

@@ -81,7 +81,7 @@ namespace MyFps
             bool isHit = Physics.Raycast(firePoint.position, firePoint.TransformDirection(Vector3.forward), out hit, maxAttackDis);
             if (isHit)
             {
-                Debug.Log("히트");
+                //Debug.Log("히트");
                 //Robot robot = hit.transform.GetComponent<Robot>();
                 //if(robot != null)
                 //{
