@@ -108,6 +108,7 @@ namespace MyFps
                 if (damageable != null)
                 {
                     damageable.TakeDamage(attackDamage);
+                    //Debug.Log("È÷Æ®");
                 }
             }
 
