@@ -52,6 +52,7 @@ namespace MyFps
             unInteractive = true;
 
             sequenceText.text = "";
+            AudioManager.Instance.Play("DoorLocked");
 
             yield return new WaitForSeconds(1f);
 

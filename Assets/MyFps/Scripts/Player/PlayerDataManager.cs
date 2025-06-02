@@ -14,6 +14,8 @@ namespace MyFps
     public enum PuzzleKey
     {
         ROOM01_KEY,
+        LEFT_EYE,
+        RIGHT_EYE,
         MAXKEY,     //∆€¡Ò æ∆¿Ã≈€ ∞πºˆ
     }
 

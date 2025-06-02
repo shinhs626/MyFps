@@ -1393,6 +1393,7 @@ MonoBehaviour:
   actionText: {fileID: 1661001878}
   extraCross: {fileID: 497610588}
   action: Pick up Pistol
+  unInteractive: 0
   realPistol: {fileID: 2904934504266123715}
   theArrow: {fileID: 2051144551}
   ammoUI: {fileID: 746059946}
@@ -16161,6 +16162,7 @@ MonoBehaviour:
   actionText: {fileID: 1661001878}
   extraCross: {fileID: 497610588}
   action: Open The Door
+  unInteractive: 0
   animator: {fileID: 6646439816524306123}
   audioSource: {fileID: 655444959}
 --- !u!1 &1096729423

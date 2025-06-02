@@ -16,8 +16,8 @@ namespace MyFps
         public AnimationCurve curve;
 
         //페이드인 딜레이 타임
-        [SerializeField]
-        private float fadeInDelay = 5f;
+        //[SerializeField]
+        //private float fadeInDelay = 5f;
         #endregion
 
         private void Start()
