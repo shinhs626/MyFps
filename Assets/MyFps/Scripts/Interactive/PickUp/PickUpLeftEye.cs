@@ -20,6 +20,10 @@ namespace MyFps
 
         [SerializeField]
         private PuzzleKey puzzleKey = PuzzleKey.LEFT_EYE;
+
+        //숨겨진 벽
+        public GameObject fakeWall;
+        public GameObject hiddenWall;
         #endregion
 
         #region Unity Event Method
@@ -34,6 +38,13 @@ namespace MyFps
         {
             //Debug.Log("픽업 Left Eye");
             PlayerDataManager.Instance.GainPuzzleKey(puzzleKey);
+
+            //숨겨진 벽 체크
+            if(PlayerDataManager.Instance.HasPuzzleKey(PuzzleKey.LEFT_EYE) && PlayerDataManager.Instance.HasPuzzleKey(PuzzleKey.RIGHT_EYE))
+            {
+                fakeWall.SetActive(false);
+                hiddenWall.SetActive(true);
+            }
 
             //인터렉티브 기능 제거
             unInteractive = true;
