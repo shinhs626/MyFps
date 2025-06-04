@@ -8,7 +8,9 @@ namespace MyFps
         R_Idle = 0,
         R_Walk,
         R_Attack,
-        R_Death
+        R_Death,
+        R_Patrol,
+        R_Chase
     }
 
     //enemy(로봇)을 제어하는 클래스
@@ -19,6 +21,7 @@ namespace MyFps
         private Animator animator;
         public Transform thePlayer; //타겟
         public AudioSource bgm;
+        public AudioSource jumpScare;
 
         private RobotHealth robotHealth;
 
@@ -96,9 +99,6 @@ namespace MyFps
                     break;
 
                 case RobotState.R_Attack:
-                    //2초마다 데미지를 5씩 준다
-                    OnAttackTimer();
-
                     //공격 범위 체크
                     if(distance > attackRange)
                     {
@@ -153,8 +153,9 @@ namespace MyFps
         private void OnDie()
         {
             ChangeState(RobotState.R_Death);
-            
+
             //적인 죽었을때 bgm다시 재생
+            jumpScare.Play();
             bgm.Play();
 
             this.GetComponent<BoxCollider>().enabled = false;
