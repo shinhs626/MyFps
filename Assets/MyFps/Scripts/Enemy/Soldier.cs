@@ -33,6 +33,9 @@ namespace MyFps
 
         [SerializeField]
         private float detectingRange = 10f;
+        private float distance;
+
+        private Vector3 originPos;
 
         [SerializeField]
         private float attackRange = 4f;
@@ -40,6 +43,9 @@ namespace MyFps
         [SerializeField]
         private float attackTimer = 2f;
         private float attackCountdown = 0f;
+
+        [SerializeField]
+        private float attackDamage = 5f;
         #endregion
 
         #region Unity Event Method
@@ -51,6 +57,9 @@ namespace MyFps
         }
         private void Start()
         {
+            //초기화
+            originPos = transform.position;
+
             ChangeState(RobotState.R_Idle);
         }
         private void OnEnable()
@@ -67,20 +76,32 @@ namespace MyFps
             if (soldierHealth.IsDeath)
                 return;
 
-            //이동
-            target = new Vector3(thePlayer.position.x, 0f, thePlayer.position.z);
-            float distance = Vector3.Distance(transform.position, target);
-
-            if (distance <= attackRange)
+            //플레이어 위치 확인
+            if (PlayerController.safeZoneIn)
             {
-                //공격 상태로 변경
-                ChangeState(RobotState.R_Attack);
+                if(soldierState == RobotState.R_Attack || soldierState == RobotState.R_Chase)
+                {
+                    BackHome();
+                    return;
+                }
             }
-            //사거리 체크
-            if (distance <= detectingRange)
+            else
             {
-                //추격 상태로 변경
-                ChangeState(RobotState.R_Chase);
+                //이동
+                target = new Vector3(thePlayer.position.x, 0f, thePlayer.position.z);
+                distance = Vector3.Distance(transform.position, target);
+
+                if (distance <= attackRange)
+                {
+                    //공격 상태로 변경
+                    ChangeState(RobotState.R_Attack);
+                }
+                //사거리 체크
+                else if (distance <= detectingRange)
+                {
+                    //추격 상태로 변경
+                    ChangeState(RobotState.R_Chase);
+                }
             }
 
             //상태 구현
@@ -101,6 +122,10 @@ namespace MyFps
                     }
                     break;
                 case RobotState.R_Walk:
+                    if (agent.remainingDistance <= 0.2f)
+                    {
+                        ChangeState(RobotState.R_Idle);
+                    }
                     break;
                 case RobotState.R_Attack:
                     //공격 타이머
@@ -112,6 +137,7 @@ namespace MyFps
 
                         attackCountdown = 0f;
                     }
+                    transform.LookAt(target);
                     break;
                 case RobotState.R_Death:
                     break;
@@ -125,6 +151,13 @@ namespace MyFps
                 case RobotState.R_Chase:
                     //타겟을 향해 이동
                     agent.SetDestination(target);
+
+                    //플레이어가 디텍팅 거리에서 벗어나면
+                    if(distance > detectingRange)
+                    {
+                        //제자리로 돌아가기
+                        BackHome();
+                    }
                     return;
             }
         }
@@ -133,6 +166,9 @@ namespace MyFps
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, detectingRange);
+
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, attackRange);
         }
         #endregion
 
@@ -161,6 +197,9 @@ namespace MyFps
             {
                 animator.SetInteger(enemyState, (int)soldierState);
                 idleTime = Random.Range(2f, 5f);
+
+                //네비게이션 패스 초기화
+                agent.ResetPath();
             }
             else if (soldierState == RobotState.R_Chase)
             {
@@ -194,13 +233,36 @@ namespace MyFps
             }
             agent.SetDestination(wayPoints[nowPointIndex].position);
         }
+        private void BackHome()
+        {
+            if (wayPoints.Length > 1)
+            {
+                ChangeState(RobotState.R_Patrol);
+            }
+            else
+            {
+                ChangeState(RobotState.R_Walk);
+                agent.SetDestination(originPos);
+            }
+
+            animator.SetLayerWeight(1, 0);
+        }
+        public void Attack()
+        {
+            Debug.Log($"플레이어에게 {attackDamage}를 준다");
+            IDamageable damageable = thePlayer.GetComponent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(attackDamage);
+            }
+        }
 
         private void OnDie()
         {
             ChangeState(RobotState.R_Death);
 
-            //적인 죽었을때 bgm다시 재생
-            //bgm.Play();
+            //추가 구현 내용
+            agent.enabled = false;
 
             this.GetComponent<BoxCollider>().enabled = false;
         }

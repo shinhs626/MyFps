@@ -11,6 +11,9 @@ namespace MyFps
         private CharacterController controller;
         public PistolShoot shoot;
 
+        //safeZone
+        public static bool safeZoneIn = true;
+
         //입력 - 이동
         private Vector2 inputMove;
 

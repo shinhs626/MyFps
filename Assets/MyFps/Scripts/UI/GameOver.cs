@@ -7,8 +7,9 @@ namespace MyFps
         #region Variables
         public SceneFader fader;
         [SerializeField]
-        private string loadToScene = "PalyScene";
-        private Cursor cursor;
+        private string loadToScene = "MainScene01";
+        [SerializeField]
+        private string loadToMain = "MainMenu";
         #endregion
 
         #region Unity Event Method
@@ -28,7 +29,7 @@ namespace MyFps
         }
         public void MenuButton()
         {
-            Debug.Log("menu");
+            fader.FadeTo(loadToMain);
         }
         #endregion
     }

@@ -49,6 +49,9 @@ namespace MyFps
         IEnumerator DamageEffect()
         {
             damageEffect.SetActive(true);
+
+            CinemachineShake.Instance.Shake(2f, 1f, 0.6f);
+
             PlayRandomHurt();
             yield return new WaitForSeconds(1f);
             damageEffect.SetActive(false);
