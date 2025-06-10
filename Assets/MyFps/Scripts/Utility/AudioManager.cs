@@ -136,7 +136,7 @@ namespace MyFps
                 return;
             }
 
-            sound.source.Stop();
+            sound.source.Play();
         }
 
         public void StopBgm()

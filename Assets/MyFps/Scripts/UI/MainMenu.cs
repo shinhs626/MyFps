@@ -24,8 +24,8 @@ namespace MyFps
         public Slider bgmSlider;
         public Slider sfxSlider;
 
-        private bool isShowOption;
-        private bool isShowCredit;
+        private bool isShowOption = false;
+        private bool isShowCredit = false;
 
         [SerializeField]
         private string mainScene = "MainScene01";
@@ -43,18 +43,26 @@ namespace MyFps
 
             //메뉴 배경음 플레이
             audioManager.PlayBgm("MenuMusic");
+
+            //초기화
+            isShowCredit = false;
+            isShowOption = false;
         }
         private void Update()
         {
             //esc키를 누르면
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                HideOptionUI();
+                if (isShowOption)
+                {
+                    HideOptionUI();
+                }
+                else if(isShowCredit)
+                {
+                    HideCreditUI();
+                }
             }
-            else
-            {
-                HideCreditUI();
-            }
+            
         }
         #endregion
 
@@ -72,13 +80,16 @@ namespace MyFps
         }
         public void Options()
         {
+            audioManager.Play("MenuSelect");
+
             //Debug.Log("옵션");            
             OptionUI.SetActive(true);
+            mainUI.SetActive(false);
             isShowOption = true;
         }
         public void Credits()
         {
-            Debug.Log("크레딧");
+            //Debug.Log("크레딧");
             audioManager.Play("MenuSelect");
 
             StartCoroutine(ShowCredit());
@@ -86,8 +97,7 @@ namespace MyFps
         public void Quit()
         {
             //Todo : Cheating
-            PlayerPrefs.SetFloat("Bgm", 0f);
-            PlayerPrefs.SetFloat("Sfx", 0f);
+            PlayerPrefs.DeleteAll();
 
             Debug.Log("나가기");
             Application.Quit();
