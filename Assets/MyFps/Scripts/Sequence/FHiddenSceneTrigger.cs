@@ -16,7 +16,7 @@ namespace MyFps
         {
             if(other.tag == "Player")
             {
-                AudioManager.Instance.Stop("Bgm");
+                AudioManager.Instance.StopBgm();
                 fader.FadeTo(loadToScene);
 
                 Cursor.lockState = CursorLockMode.Confined;

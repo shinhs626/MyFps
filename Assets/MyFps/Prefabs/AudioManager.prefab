@@ -44,16 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f7e71a4437a5fc4bb5537a25caa0c6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: MenuMusic
-    clip: {fileID: 8300000, guid: 837bcaa56d130614ba4d791c32c88643, type: 3}
-    voluem: 0.5
-    pitch: 1
-    loop: 1
-    audioSource: {fileID: 0}
-  - name: ButtonHit
-    clip: {fileID: 8300000, guid: fd5e5eeeada302a4e8f479bc0f92865e, type: 3}
-    voluem: 0.5
-    pitch: 1
-    loop: 0
-    audioSource: {fileID: 0}
+  sounds: []
+  audioMixer: {fileID: 24100000, guid: e5d25c3d54c555e4fa582472d23ede01, type: 2}

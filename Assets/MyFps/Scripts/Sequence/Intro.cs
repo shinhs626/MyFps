@@ -77,7 +77,7 @@ namespace MyFps
             StopAllCoroutines();
 
             //배경음 종료
-            AudioManager.Instance.Stop("IntroBgm");
+            AudioManager.Instance.StopBgm();
 
             //다음씬 가기
             fader.FadeTo(loadToScene);
@@ -149,7 +149,7 @@ namespace MyFps
             yield return new WaitForSeconds(2f);
 
             //배경음 종료
-            AudioManager.Instance.Stop("IntroBgm");
+            AudioManager.Instance.StopBgm();
 
             //다음씬 가기
             fader.FadeTo(loadToScene);

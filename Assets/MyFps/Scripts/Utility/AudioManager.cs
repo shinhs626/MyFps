@@ -1,8 +1,10 @@
 using Sample.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace MyFps
 {
+    //사운드를 관리하는 싱글톤 클래스
     public class AudioManager : Singleton<AudioManager>
     {
         #region Variables
@@ -11,6 +13,9 @@ namespace MyFps
 
         //배경음 이름
         private string bgmSound = "";
+
+        //AudioMixer
+        public AudioMixer audioMixer;
         #endregion
 
         #region Unity Event Method
@@ -18,18 +23,31 @@ namespace MyFps
         {
             base.Awake();
 
+            //AudioMixer에서 오디오 그룹 가져오기
+            AudioMixerGroup[] audioMixerGroups = audioMixer.FindMatchingGroups("Master");
+
             //사운드 데이터 셋팅
-            foreach(var s in sounds)
+            foreach (var s in sounds)
             {
-                //AudioSource 컴포넌트 추가
-                s.audioSource = this.gameObject.AddComponent<AudioSource>();
+                //AudioSource 컴포넌트 추가 생성
+                s.source = this.gameObject.AddComponent<AudioSource>();
 
-                s.audioSource.clip = s.clip;
-                s.audioSource.volume = s.voluem;
-                s.audioSource.pitch = s.pitch;
-                s.audioSource.loop = s.loop;
+                //AudioSource 컴포넌트 데이터 셋팅
+                s.source.clip = s.clip;
+                s.source.volume = s.volume;
+                s.source.pitch = s.pitch;
+                s.source.loop = s.loop;
 
-                s.audioSource.playOnAwake = false;
+                s.source.playOnAwake = false;
+
+                if (s.source.loop)
+                {
+                    s.source.outputAudioMixerGroup = audioMixerGroups[1];
+                }
+                else
+                {
+                    s.source.outputAudioMixerGroup = audioMixerGroups[2];
+                }
             }
         }
         #endregion
@@ -39,11 +57,10 @@ namespace MyFps
         public void Play(string name)
         {
             Sound sound = null;
-
             //사운드 목록에서 같은 이름의 사운드 찾기
-            foreach(var s in sounds)
+            foreach (var s in sounds)
             {
-                if(s.name == name)
+                if (s.name == name)
                 {
                     sound = s;
                     break;
@@ -51,12 +68,13 @@ namespace MyFps
             }
 
             //찾았는지 체크
-            if(sound == null)
+            if (sound == null)
             {
-                Debug.Log("사운드를 찾을 수 없습니다" + name);
+                Debug.Log("Cannot Find " + name + " Sound");
                 return;
             }
-            sound.audioSource.Play();
+
+            sound.source.Play();
         }
 
         //사운드 정지
@@ -77,17 +95,18 @@ namespace MyFps
             //찾았는지 체크
             if (sound == null)
             {
-                Debug.Log("사운드를 찾을 수 없습니다" + name);
+                Debug.Log("Cannot Find " + name + " Sound");
                 return;
             }
-            sound.audioSource.Stop();
+
+            sound.source.Stop();
         }
 
         //배경음 플레이
         public void PlayBgm(string name)
         {
-            //배경음 체크
-            if(bgmSound == name)
+            //배경음 이름 체크
+            if (bgmSound == name)
             {
                 return;
             }
@@ -113,12 +132,18 @@ namespace MyFps
             //찾았는지 체크
             if (sound == null)
             {
-                Debug.Log("사운드를 찾을 수 없습니다" + name);
+                Debug.Log("Cannot Find " + name + " Bgm Sound");
                 return;
             }
-            sound.audioSource.Stop();
+
+            sound.source.Stop();
+        }
+
+        public void StopBgm()
+        {
+            //배경음 정지
+            Stop(bgmSound);
         }
         #endregion
     }
-
 }
