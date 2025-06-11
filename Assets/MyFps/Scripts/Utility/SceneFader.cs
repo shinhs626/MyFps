@@ -58,21 +58,6 @@ namespace MyFps
             StartCoroutine(FadeIn(delayTime));
         }
 
-        //FadeOut : 1초동안 : 투명에서 완전 검정으로 (이미지 알파값 a:0 -> a:1)
-        IEnumerator FadeOut()
-        {
-            float t = 0f;
-
-            while(t < 1f)
-            {
-                t += Time.deltaTime;
-                float a = curve.Evaluate(t);
-                img.color = new Color(0f, 0f, 0f, a);
-
-                yield return 0f;
-            }
-        }
-
         //FadeOut 효과 후 매개변수로 받은 씬이름으로 LoadScene으로 이동
         IEnumerator FadeOut(string sceneName)
         {
@@ -95,11 +80,37 @@ namespace MyFps
             }
         }
 
+        //FadeOut 효과 후 매개변수로 받은 씬이름으로 LoadScene으로 이동
+        IEnumerator FadeOut(int sceneNumber)
+        {
+            //FadeOut 효과 후
+            float t = 0f;
+
+            while (t < 1f)
+            {
+                t += Time.deltaTime;
+                float a = curve.Evaluate(t);
+                img.color = new Color(0f, 0f, 0f, a);
+
+                yield return 0f;
+            }
+
+            //씬이동
+            if (sceneNumber >= 0)
+            {
+                SceneManager.LoadScene(sceneNumber);
+            }
+        }
+
         //다른 씬으로 이동시 호출
         public void FadeTo(string sceneName = "")
         {            
             StartCoroutine(FadeOut(sceneName));
         }
 
+        public void FadeTo(int sceneNumber = -1)
+        {
+            StartCoroutine(FadeOut(sceneNumber));
+        }
     }
 }

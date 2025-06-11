@@ -13,6 +13,7 @@ namespace MyFps
 
         //체력
         private float currentHealth;
+
         [SerializeField]
         private float maxHealth = 20;
 
@@ -27,7 +28,7 @@ namespace MyFps
         private void Start()
         {
 
-            currentHealth = maxHealth;
+            currentHealth = PlayerDataManager.Instance.PlayerHealth;
         }
         #endregion
 
@@ -36,7 +37,9 @@ namespace MyFps
         public void TakeDamage(float damage)
         {
             currentHealth -= damage;
-            Debug.Log($"currentHealth: {currentHealth}");
+            //Debug.Log($"currentHealth: {currentHealth}");
+
+            PlayerDataManager.Instance.PlayerHealth = currentHealth;
 
             //데미지 연출 Sfx, Vfx
             StartCoroutine(DamageEffect());

@@ -51,15 +51,18 @@ namespace MyFps
         #region Unity Event Method
         private void Awake()
         {
+            //Debug.Log("Awake");
+
             animator = this.GetComponent<Animator>();
             soldierHealth = this.GetComponent<RobotHealth>();
-            agent = this.GetComponent<NavMeshAgent>();
+            agent = this.GetComponent<NavMeshAgent>();            
         }
         private void Start()
         {
+            //Debug.Log("Start");
             //√ ±‚»≠
             originPos = transform.position;
-
+            
             ChangeState(RobotState.R_Idle);
         }
         private void OnEnable()

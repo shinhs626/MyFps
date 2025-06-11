@@ -23,13 +23,31 @@ namespace MyFps
     public class PlayerDataManager : Singleton<PlayerDataManager>
     {
         #region Variables
-        private int ammoCount;
+        private int sceneNumber;    //씬 넘버
+        private int ammoCount;      //소지한 탄환 갯수
+        private float playerHealth; //플레이어 체력
 
         private bool[] hasKeys;      //퍼즐 아이템 소지 여부 체크
+
+        [SerializeField]
+        private float maxPlayerHealth = 20f;
         #endregion
 
         #region Property
         public WeaponType Weapon { get; set; }
+
+        //플레이 중인 씬 빌드 번호
+        public int SceneNumber
+        {
+            get
+            {
+                return sceneNumber;
+            }
+            set
+            {
+                sceneNumber = value;
+            }
+        }
 
         //탄환 갯수 리턴하는 읽기 전용 프로퍼티
         public int AmmoCount
@@ -38,22 +56,51 @@ namespace MyFps
             {
                 return ammoCount;
             }
+            set
+            {
+                ammoCount = value;
+            }
+        }
+
+        public float PlayerHealth
+        {
+            get
+            {
+                return playerHealth;
+            }
+            set
+            {
+                playerHealth = value;
+            }
         }
         #endregion
 
         #region Unity Event Method
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             InitPlayerData();
         }
         #endregion
 
         #region Custom Method
-        private void InitPlayerData()
+        public void InitPlayerData(PlayData pData = null)
         {
-            //플레이어 데이터 초기화
+            if(pData != null)
+            {
+                sceneNumber = pData.sceneNumber;
+                ammoCount = pData.ammoCount;
+                playerHealth = pData.playerHealth;
+            }
+            else
+            {
+                //플레이어 데이터 초기화
+                sceneNumber = -1;
+                ammoCount = 0;
+                playerHealth = maxPlayerHealth;
+            }
             Weapon = WeaponType.None;
-            ammoCount = 0;
 
             //퍼즐 아이템 설정 : 퍼즐 아이템 갯수만큼 bool형 요소수 생성
             hasKeys = new bool[(int)PuzzleKey.MAXKEY];

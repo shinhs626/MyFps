@@ -7,8 +7,12 @@ namespace MyFps
     public class PauseUI : MonoBehaviour
     {
         #region Variables
+        public SceneFader fader;
+
         public GameObject pauseUI;
         public PlayerInput playerInput;
+
+        private string loadToScene = "MainMenu";
         #endregion
 
         #region Custom Method
@@ -42,7 +46,8 @@ namespace MyFps
         }
         public void MainMenu()
         {
-            Debug.Log("메인 메뉴로 이동");
+            //Debug.Log("메인 메뉴로 이동");
+            fader.FadeTo(loadToScene);
         }
         #endregion
     }

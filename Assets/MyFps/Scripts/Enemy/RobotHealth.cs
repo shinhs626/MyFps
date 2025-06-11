@@ -11,7 +11,7 @@ namespace MyFps
         [SerializeField]
         private float maxHealth = 20;
 
-        private static bool isDeath = false;
+        private bool isDeath = false;
 
         [SerializeField]
         private float destroyDelay = 5f;
@@ -35,6 +35,7 @@ namespace MyFps
         {
             //√ ±‚»≠
             currentHealth = maxHealth;
+            //Debug.Log("Start");
         }
         #endregion
 

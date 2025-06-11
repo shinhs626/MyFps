@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using static UnityEngine.Rendering.DebugUI;
 
@@ -17,6 +18,7 @@ namespace MyFps
         public GameObject OptionUI;
         public GameObject creditUI;
         public GameObject mainUI;
+        public GameObject loadGameButton;
 
         //볼륨 조절
         public AudioMixer audioMixer;
@@ -28,14 +30,28 @@ namespace MyFps
         private bool isShowCredit = false;
 
         [SerializeField]
-        private string mainScene = "MainScene01";
+        private string intro = "Intro";
+        //[SerializeField]
+        //private string mainScene01 = "MainScene01";
+        //[SerializeField]
+        //private string mainScene02 = "MainScene02";
+
+        private int sceneNumber;
         #endregion
 
         #region Unity Event Method
         private void Start()
         {
-            LoadOptions();
+            GameDataInit();
 
+            if (sceneNumber >= 0)
+            {
+                loadGameButton.SetActive(true);
+            }
+            else
+            {
+                loadGameButton.SetActive(false);
+            }
             //참조
             audioManager = AudioManager.Instance;
 
@@ -67,16 +83,42 @@ namespace MyFps
         #endregion
 
         #region Custom Method
+        private void GameDataInit()
+        {
+            //옵션 저장값 가져와서 게임에 적용
+            LoadOptions();
+
+            if (PlayerDataManager.Instance == null)
+            {
+                Debug.LogError("PlayerDataManager 인스턴스가 null입니다! 씬에 추가되어 있는지 확인하세요.");
+                return;
+            }
+                //게임 플레이 저장값 가져오기
+                //sceneNumber = PlayerPrefs.GetInt("SaveScene", -1);
+
+            PlayData playData = SaveLoad.LoadData();
+            if(playData == null)
+            {
+                Debug.Log("여기");
+            }
+            PlayerDataManager.Instance.InitPlayerData(playData);
+            sceneNumber = PlayerDataManager.Instance.SceneNumber;
+        }
+
         public void MainSceneLoad()
         {
             //메뉴선택 사운드
             audioManager.Play("MenuSelect");
+            audioManager.StopBgm();
 
-            fader.FadeTo(mainScene);
+            fader.FadeTo(intro);
         }
         public void LoadScene()
         {
-            Debug.Log("로드");
+            audioManager.Play("MenuSelect");
+            audioManager.StopBgm();
+
+            fader.FadeTo(sceneNumber);
         }
         public void Options()
         {
@@ -96,10 +138,11 @@ namespace MyFps
         }
         public void Quit()
         {
+            audioManager.Play("MenuSelect");
             //Todo : Cheating
             PlayerPrefs.DeleteAll();
 
-            Debug.Log("나가기");
+            //Debug.Log("나가기");
             Application.Quit();
         }
 

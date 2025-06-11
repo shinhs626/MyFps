@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace MyFps
 {
@@ -30,6 +31,16 @@ namespace MyFps
         #region Unity Event Method
         private void Start()
         {
+            /*
+            //게임 데이터(씬 번호) 저장
+            int sceneNumber = SceneManager.GetActiveScene().buildIndex;
+            Debug.Log("SaveScene"+sceneNumber);
+            PlayerPrefs.SetInt("SaveScene", sceneNumber);
+            */
+            //File System
+            PlayerDataManager.Instance.SceneNumber = SceneManager.GetActiveScene().buildIndex;
+            SaveLoad.SaveData();
+
             //커서 제어
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

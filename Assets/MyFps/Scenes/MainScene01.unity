@@ -10484,6 +10484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 996d32441750cb849b7fd6d46658d1be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fader: {fileID: 7937705}
   pauseUI: {fileID: 1292581280}
   playerInput: {fileID: 6844385037709470354}
 --- !u!1 &968670020
@@ -23391,6 +23392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thePlayer: {fileID: 5997727388761173057}
   bgm: {fileID: 613383870}
+  jumpScare: {fileID: 1961227030}
   moveSpeed: 1.5
   attackRange: 1.5
   attackDamage: 6.2

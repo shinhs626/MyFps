@@ -25,7 +25,8 @@ namespace MyFps
         #region Custom Method
         public void RestartButton()
         {
-            fader.FadeTo(loadToScene);
+            int nowScene = PlayerDataManager.Instance.SceneNumber;
+            fader.FadeTo(nowScene);
         }
         public void MenuButton()
         {
