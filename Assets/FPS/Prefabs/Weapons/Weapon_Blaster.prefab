@@ -275,6 +275,14 @@ MonoBehaviour:
   weaponRoot: {fileID: 1505447205160222267}
   shootAudioSource: {fileID: 8090847488450120274}
   switchWeaponSfx: {fileID: 8300000, guid: a336e06d5aac9644d93e9449f45fb1fe, type: 3}
+  defaultCrosshair:
+    crosshairSprite: {fileID: 21300000, guid: ed391e04682f45f41b0c81e7a2ac5336, type: 3}
+    crosshairSize: 35
+    crosshairColor: {r: 1, g: 1, b: 1, a: 1}
+  targetInSightCrosshair:
+    crosshairSprite: {fileID: 21300000, guid: ed391e04682f45f41b0c81e7a2ac5336, type: 3}
+    crosshairSize: 40
+    crosshairColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0

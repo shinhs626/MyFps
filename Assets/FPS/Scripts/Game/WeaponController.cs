@@ -1,7 +1,17 @@
+using System;
 using UnityEngine;
 
 namespace Unity.FPS.Game
 {
+    //크로스헤어 데이터 구조체
+    [Serializable]
+    public struct CrosshairData
+    {
+        public Sprite crosshairSprite;
+        public float crosshairSize;
+        public Color crosshairColor;
+    }
+
     //무기를 제어하는 클래스, 모든 무기에 부착된다
     [RequireComponent(typeof(AudioSource))]
     public class WeaponController : MonoBehaviour
@@ -12,6 +22,10 @@ namespace Unity.FPS.Game
 
         public AudioSource shootAudioSource;
         public AudioClip switchWeaponSfx;       //무기 바꿀시 효과음
+
+        //크로스 헤어
+        public CrosshairData defaultCrosshair;      //기본 크로스헤어
+        public CrosshairData targetInSightCrosshair;        //적이 타겟팅 되었을때의 크로스헤어
         #endregion
 
         #region Property
