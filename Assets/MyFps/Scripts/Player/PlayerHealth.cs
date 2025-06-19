@@ -15,7 +15,7 @@ namespace MyFps
         private float currentHealth;
 
         [SerializeField]
-        private float maxHealth = 20;
+        //private float maxHealth = 20;
 
         private bool isDeath = false;
 

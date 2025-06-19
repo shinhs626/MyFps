@@ -6,8 +6,8 @@ namespace MyFps
     {
         #region Variables
         public SceneFader fader;
-        [SerializeField]
-        private string loadToScene = "MainScene01";
+        //[SerializeField]
+        //private string loadToScene = "MainScene01";
         [SerializeField]
         private string loadToMain = "MainMenu";
         #endregion

@@ -21,6 +21,7 @@ namespace Unity.FPS.Gameplay
         #region Variables
         //참조
         private PlayerInputHandler inputHandler;
+        private PlayerCharacterController playerCharacterController;
 
         //시작 할 때 지급 되는 무기 : 3개 지급
         public List<WeaponController> startingWeapons = new List<WeaponController>();
@@ -43,6 +44,7 @@ namespace Unity.FPS.Gameplay
         //무기 교체시 계산되는 위치
         public Transform defaultWeaponPosition;
         public Transform downWeaponPosition;
+        public Transform aimingWeaponPosition;
 
         //무기 교체 상태
         private WeaponSwitchState weaponSwitchState;
@@ -55,6 +57,32 @@ namespace Unity.FPS.Gameplay
 
         //적 포착
         public Camera weaponCamera;
+
+        //카메라 FOV
+        [SerializeField]
+        private float defaultFov = 60f;
+        //무기에 따른 fov 즘 계수 값
+        [SerializeField]
+        private float weaponFovMultiplier = 1f;
+
+        //조준 Aim
+        private float aimingAnimationSpeed = 10f;   //조준 이동 연출
+        private float aimingFov;
+
+        //흔들림 bob
+        [SerializeField]
+        private float bobFrequency = 10f;
+        [SerializeField]
+        private float bobSharpness = 10f;
+        [SerializeField]
+        private float defaultBobAmount = 0.05f;     //기본 흔들림 값
+        [SerializeField]
+        private float aimingBobAmount = 0.02f;      //조준시 흔들림 값
+
+        private float m_WeaponBobFactor;            //이동 속도(매 프레임)에 따른 흔들림 계수
+        private Vector3 m_LastCharacterPosition;    //이번 프레임의 캐릭터 최종위치
+
+        private Vector3 m_WeaponBobLocalPosition;   //이번 프레임에 흔들림 량의 최종 계산값
         #endregion
 
         #region Property
@@ -63,6 +91,9 @@ namespace Unity.FPS.Gameplay
 
         //적 포착 체크
         public bool IsPointingAtEnemy { get; private set; }
+
+        //조준 여부 체크
+        public bool IsAiming { get; private set; }
         #endregion
 
         #region Unity Event Method
@@ -70,10 +101,13 @@ namespace Unity.FPS.Gameplay
         {
             //참조
             inputHandler = this.GetComponent<PlayerInputHandler>();
+            playerCharacterController = this.GetComponent<PlayerCharacterController>();
 
             //초기화
             ActiveWeaponIndex = -1;
             weaponSwitchState = WeaponSwitchState.Down;
+
+            SetFov(defaultFov);
 
             //무기 교체시 호출될 함수 등록
             OnSwitchToWeapon += OnWeaponSwitched;
@@ -91,6 +125,9 @@ namespace Unity.FPS.Gameplay
         {
             //현재 액티브 무기 가져오기
             WeaponController activeWeapon = GetActiveWeapon();
+
+            //키 인풋 받아서 조준
+            IsAiming = inputHandler.GetAimInputHeld();
 
             if(weaponSwitchState == WeaponSwitchState.Up || weaponSwitchState == WeaponSwitchState.Down)
             {
@@ -123,12 +160,85 @@ namespace Unity.FPS.Gameplay
             //무기 교체 연출
             UpdateWeaponState();
 
+            //무기 흔들림
+            UpdateWeaponBob();
+
+            //무기 조준
+            UpdateWeaponAiming();
+
             //무기의 최종 위치
-            weaponParentSocket.localPosition = weaponMainLocalPosition;
+            weaponParentSocket.localPosition = weaponMainLocalPosition + m_WeaponBobLocalPosition;
         }
         #endregion
 
         #region Custom Method
+        //카메라 FOV 조정
+        private void SetFov(float fov)
+        {
+            playerCharacterController.PlayerCamera.fieldOfView = fov;
+            weaponCamera.fieldOfView = fov * weaponFovMultiplier;
+        }
+
+        //조준 연출에 따른 무기 위치 변경
+        private void UpdateWeaponAiming()
+        {
+            if (weaponSwitchState != WeaponSwitchState.Up)
+                return;
+
+            WeaponController activeWeapon = GetActiveWeapon();
+
+            if (IsAiming && activeWeapon)   //조준
+            {
+                //위치 조정
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition, aimingWeaponPosition.localPosition + activeWeapon.aimOffset, aimingAnimationSpeed * Time.deltaTime);
+                //Fov 조정
+                aimingFov = Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, defaultFov * activeWeapon.aimZoomRatio, aimingAnimationSpeed * Time.deltaTime);
+                SetFov(aimingFov);
+            }
+            else  //조준X
+            {
+                //위치 조정
+                weaponMainLocalPosition = Vector3.Lerp(weaponMainLocalPosition, defaultWeaponPosition.localPosition, aimingAnimationSpeed * Time.deltaTime);
+                //Fov 조정
+                aimingFov = Mathf.Lerp(playerCharacterController.PlayerCamera.fieldOfView, defaultFov, aimingAnimationSpeed * Time.deltaTime);
+                SetFov(aimingFov);
+            }
+        }
+
+        //흔들림에 따른 무기 흔들림 량 구하기
+        private void UpdateWeaponBob()
+        {
+            if(Time.deltaTime > 0)
+            {
+                //이번 프레임에 이동한 거리
+                Vector3 playerCharacterVelocity = (playerCharacterController.transform.position - m_LastCharacterPosition) / Time.deltaTime;
+
+                //게임에서 캐릭터의 이동 속도 계수(0~1) 정지 : 0 , Max 이동속도 시 1
+                float charactorMovementFactor = 0f;
+                if (playerCharacterController.IsGrounded)
+                {
+                    charactorMovementFactor = Mathf.Clamp01(playerCharacterVelocity.magnitude / 
+                        (playerCharacterController.MaxSpeedOnGround * playerCharacterController.SprintSpeedModifier));
+                }
+
+                m_WeaponBobFactor = Mathf.Lerp(m_WeaponBobFactor, charactorMovementFactor, bobSharpness * Time.deltaTime);
+
+                //BobFactor에 따른 흔들림 량, 흔들림 속도로 최종적인 m_WeaponBobLocalPosition  구하기
+                float bobAmount = IsAiming ? aimingBobAmount : defaultBobAmount;
+                float frequency = bobFrequency;
+                //좌 우 이동량
+                float hBobValue = Mathf.Sin(Time.time * frequency) * bobAmount * m_WeaponBobFactor;
+                //위 아래 이동량
+                float vBobValue = (Mathf.Sin(Time.time * frequency * 2) * 0.5f + 0.5f) * bobAmount * m_WeaponBobFactor;
+
+                //흔들림 최종 위치
+                m_WeaponBobLocalPosition.x = hBobValue;
+                m_WeaponBobLocalPosition.y = vBobValue;
+                //
+                m_LastCharacterPosition = playerCharacterController.transform.position;
+            }
+        }
+
         //무기 교체 연출 및 상태 변경 구현
         private void UpdateWeaponState()
         {
