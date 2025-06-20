@@ -241,6 +241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponRoot: {fileID: 1505447205160222267}
+  weaponMuzzle: {fileID: 8334323006752503713}
   shootAudioSource: {fileID: 8090847488450120274}
   switchWeaponSfx: {fileID: 8300000, guid: a336e06d5aac9644d93e9449f45fb1fe, type: 3}
   defaultCrosshair:
@@ -253,6 +254,11 @@ MonoBehaviour:
     crosshairColor: {r: 0, g: 0.71642184, b: 1, a: 1}
   aimZoomRatio: 0.7
   aimOffset: {x: 0, y: 0.13, z: 0}
+  shootType: 0
+  maxAmmo: 8
+  delayBetweenShots: 0.5
+  muzzleFlashPrefab: {fileID: 748781637555137343, guid: 4f5d4e5eaa0e5104791549cea3dc3f23, type: 3}
+  shootSfx: {fileID: 8300000, guid: 95eb9441544d6d2429a555241ca36358, type: 3}
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0
