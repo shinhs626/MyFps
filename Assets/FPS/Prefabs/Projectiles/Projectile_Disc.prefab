@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 106790115311484949}
   - component: {fileID: 106790115311484954}
   - component: {fileID: -4621147811337077831}
+  - component: {fileID: -359594862689209596}
   m_Layer: 0
   m_Name: Projectile_Disc
   m_TagString: Untagged
@@ -100,6 +101,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29c47d62be028c94d8fc7a03df4d98b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLifeTime: 5
+  speed: 20
+  gravityDown: 0
+  root: {fileID: 843682582143931206}
+  tip: {fileID: 0}
+--- !u!114 &-359594862689209596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106790115311484953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c221ffbec57d128488082db80503bc72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 5
 --- !u!1 &1945832826066038730
 GameObject:
   m_ObjectHideFlags: 0

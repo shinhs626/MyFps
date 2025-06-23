@@ -242,7 +242,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponRoot: {fileID: 1505447205160222267}
   weaponMuzzle: {fileID: 8334323006752503713}
-  shootAudioSource: {fileID: 8090847488450120274}
   switchWeaponSfx: {fileID: 8300000, guid: a336e06d5aac9644d93e9449f45fb1fe, type: 3}
   defaultCrosshair:
     crosshairSprite: {fileID: 21300000, guid: 82a4653155f0c824bb9a88b660409493, type: 3}
@@ -259,6 +258,10 @@ MonoBehaviour:
   delayBetweenShots: 0.5
   muzzleFlashPrefab: {fileID: 748781637555137343, guid: 4f5d4e5eaa0e5104791549cea3dc3f23, type: 3}
   shootSfx: {fileID: 8300000, guid: 95eb9441544d6d2429a555241ca36358, type: 3}
+  recoilForce: 0.5
+  projectPrefab: {fileID: 5564551887057404124, guid: f05c7e6fbbfbe824388456bb4abff9d4, type: 3}
+  bulletsPerShot: 2
+  bulletSpreadAngle: 1
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0

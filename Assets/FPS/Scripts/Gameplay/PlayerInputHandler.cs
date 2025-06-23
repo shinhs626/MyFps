@@ -23,6 +23,8 @@ namespace Unity.FPS.Gameplay
         #region Variables
         //Fire 버튼 상태 체크
         private bool wasFireInputHeld;
+        //Aim 버튼 상태 체크
+        private bool wasAimingInputHeld;
         #endregion
 
 
@@ -38,6 +40,8 @@ namespace Unity.FPS.Gameplay
 
             //Fire 버튼 상태 저장
             wasFireInputHeld = GetFireInputHeld();
+            //Aim 버튼 상태 체크
+            wasAimingInputHeld = GetAimInputHeld();
         }
 
         public bool CanProcessInput()
@@ -175,6 +179,27 @@ namespace Unity.FPS.Gameplay
             if (CanProcessInput())
             {
                 return Input.GetButton(GameConstants.k_ButtonNameAim);
+            }
+
+            return false;
+        }
+
+        //마우스 우클릭하여 조준 모드 시작할 때
+        public bool GetAimInputDown()
+        {
+            if (CanProcessInput())
+            {
+                return !wasAimingInputHeld && GetAimInputHeld();
+            }
+            return false;
+        }
+
+        //마우스 우클릭하여 조준 모드 끝날 때
+        public bool GetAimInputReleased()
+        {
+            if (CanProcessInput())
+            {
+                return wasAimingInputHeld && !GetAimInputHeld();
             }
 
             return false;

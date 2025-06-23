@@ -16,7 +16,7 @@ namespace Unity.FPS.Game
 
         public Vector3 InitialPosition { get; private set; }    //발사 할 때의 초기 위치
         public Vector3 InitialDirection { get; private set; }   //발사 할 때의 초기 앞 방향
-        public Vector3 InHeritedMuzzleVelocity { get; private set; }    //발사 시 총구의 이동 속도
+        public Vector3 InheritedMuzzleVelocity { get; private set; }    //발사 시 총구의 이동 속도
         public float InitialCharge { get; private set; }    //슛 타입의 무기 충전량
         #endregion
 
@@ -31,7 +31,7 @@ namespace Unity.FPS.Game
             Owner = controller.Owner;
             InitialPosition = this.transform.position;
             InitialDirection = this.transform.forward;
-            InHeritedMuzzleVelocity = controller.MuzzleWorldVelocity;
+            InheritedMuzzleVelocity = controller.MuzzleWorldVelocity;
             InitialCharge = controller.CurrentCharge;
 
             //발사 시 등록된 함수들을 호출
