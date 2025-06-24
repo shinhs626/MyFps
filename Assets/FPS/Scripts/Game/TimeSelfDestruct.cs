@@ -5,8 +5,7 @@ namespace Unity.FPS.Game
     public class TimeSelfDestruct : MonoBehaviour
     {
         #region Variables
-        [SerializeField]
-        private float lifeTime = 5f;
+        public float lifeTime = 5f;
         private float spawnTime;    //생성시간
         #endregion
 

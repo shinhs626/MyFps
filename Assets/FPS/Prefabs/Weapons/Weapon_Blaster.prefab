@@ -287,13 +287,13 @@ MonoBehaviour:
   aimOffset: {x: 0, y: 0.075, z: 0}
   shootType: 1
   maxAmmo: 8
-  delayBetweenShots: 0.5
+  delayBetweenShots: 0.1
   muzzleFlashPrefab: {fileID: 748781637555137343, guid: 3f5b545b9a1e74c418b061bba5bb9e2c, type: 3}
   shootSfx: {fileID: 8300000, guid: e5e7f94b61c601c4c98050e313e90ee0, type: 3}
   recoilForce: 0.5
   projectPrefab: {fileID: 7861301343329783952, guid: 3c6b27d949cdda749892906e1f1d1b27, type: 3}
   bulletsPerShot: 1
-  bulletSpredAngle: 0
+  bulletSpreadAngle: 0
 --- !u!1 &2867801751256125023
 GameObject:
   m_ObjectHideFlags: 0

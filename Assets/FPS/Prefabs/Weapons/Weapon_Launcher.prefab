@@ -164,8 +164,8 @@ MonoBehaviour:
   shootSfx: {fileID: 8300000, guid: 79ebdaa1f397bff4ea48ae9c7db0f157, type: 3}
   recoilForce: 0.5
   projectPrefab: {fileID: -4621147811337077831, guid: 0e23901b938cf4f4eb86850d912715eb, type: 3}
-  bulletsPerShot: 4
-  bulletSpredAngle: 0
+  bulletsPerShot: 1
+  bulletSpreadAngle: 0
 --- !u!1 &2990922162098100101
 GameObject:
   m_ObjectHideFlags: 0

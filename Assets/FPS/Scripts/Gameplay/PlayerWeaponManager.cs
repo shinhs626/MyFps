@@ -39,6 +39,8 @@ namespace Unity.FPS.Gameplay
         //무기 교체
         //무기 교체시 등록된 함수들이 호출되는 Unity Action함수
         public UnityAction<WeaponController> OnSwitchToWeapon;
+        public UnityAction<WeaponController, int> OnAddedWeapon;
+        public UnityAction<WeaponController, int> OnRemovedWeapon;
 
         //무기 교체
         //무기 교체시 계산되는 위치
@@ -416,12 +418,49 @@ namespace Unity.FPS.Gameplay
                     weaponInstance.SourcePrefab = weaponPrefab.gameObject;
                     weaponInstance.ShowWeapon(false);
 
+                    //슬롯에 무기 추가
                     weaponSlots[i] = weaponInstance;
+
+                    //무기 추가와 관련된 함수 호출
+                    OnAddedWeapon?.Invoke(weaponInstance, i);                    
                     return true;
                 }
                 
             }
             Debug.Log("WeaponSlots Full");
+            return false;
+        }
+        //매개변수로 받은 무기(WeaponController)를 무기 리스트에서 제거
+        public bool RemovedWeapon(WeaponController weaponInstance)
+        {
+            if(weaponInstance == null)
+            {
+                return false;
+            }
+
+            //슬롯에서 같은 무기 찾기
+            for (int i = 0; i < weaponSlots.Length; i++)
+            {
+                if (weaponSlots[i] == weaponInstance)
+                {
+                    //슬롯 값 초기화
+                    weaponSlots[i] = null;
+
+                    //무기 제거와 관련된 등록된 함수 호출
+                    OnRemovedWeapon?.Invoke(weaponInstance, i);
+
+                    //무기 오브젝트 kill
+                    Destroy(weaponInstance.gameObject);
+
+                    //제거한 무기가 액티브한 무기라면
+                    if(i == ActiveWeaponIndex)
+                    {
+                        SwitchWeapon(true);
+                    }
+
+                    return true;
+                }
+            }
             return false;
         }
 

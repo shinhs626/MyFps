@@ -47,10 +47,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLifeTime: 5
-  speed: 20
-  gravityDown: 0
-  root: {fileID: 8402172112652589804}
+  speed: 150
+  gravityDown: 20
+  root: {fileID: 3659995153115176982}
   tip: {fileID: 1135791333161367127}
+  hittableLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  impactVfxPrefab: {fileID: 7655095426451682942, guid: 358eca6adc32a89459c54b6b62d9c825, type: 3}
+  impactSfxClip: {fileID: 8300000, guid: 91332aa271ca9f74588471a7b2ab50d5, type: 3}
+  damage: 7
 --- !u!114 &-6440747035519411996
 MonoBehaviour:
   m_ObjectHideFlags: 0
