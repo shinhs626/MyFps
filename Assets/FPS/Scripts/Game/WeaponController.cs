@@ -40,7 +40,7 @@ namespace Unity.FPS.Game
         public CrosshairData targetInSightCrosshair;        //적이 타겟팅 되었을때의 크로스헤어
 
         //조준 Aim
-        [Range(0,1)]
+        [Range(0, 1)]
         public float aimZoomRatio = 1f; //조준시 줌 확대 배율
         public Vector3 aimOffset;       //조준 위치로 이동시 무기별 offset(조정) 위치
 
@@ -76,6 +76,13 @@ namespace Unity.FPS.Game
 
         //발사체 Projectile
         private Vector3 lastMuzzlePosition;     //지난 프레임에 Muzzle의 위치
+
+        //재장전 - Reload
+        //자동 재장전
+        [SerializeField]
+        private bool automaticReload = true;
+        private float ammoReloadRate = 1f;      //초당 재장전 되는 ammo의 량
+        private float ammoReloadDelay = 2f;           //총을 쏜 후 delay 시간 이후 재장전 시간
         #endregion
 
         #region Property
@@ -89,7 +96,9 @@ namespace Unity.FPS.Game
         public Vector3 MuzzleWorldVelocity { get; private set; }    //발사 시 총구의 이동 속도
         public float CurrentCharge { get; private set; }    //
 
-        public WeaponShootType ShootType { get; private set; }    //shootType
+        public WeaponShootType ShootType => shootType;    //shootType
+
+        public float CurrentAmmoRate {get; set; }  //현재 소유한 ammo 비율
         #endregion
 
         #region Unity Event Method
@@ -106,7 +115,9 @@ namespace Unity.FPS.Game
         }
         private void Update()
         {
-            if(Time.deltaTime > 0)
+            UpdateAmmo();
+
+            if (Time.deltaTime > 0)
             {
                 //이번 프레임의 Muzzle 속도
                 MuzzleWorldVelocity = (weaponMuzzle.position - lastMuzzlePosition) / Time.deltaTime;
@@ -118,6 +129,27 @@ namespace Unity.FPS.Game
         #endregion
 
         #region Custom Method
+        //Ammo 연산
+        private void UpdateAmmo()
+        {
+            //재장전
+            if (automaticReload && currentAmmo < maxAmmo && (lastTimeShot + ammoReloadDelay) <= Time.time)
+            {
+                currentAmmo += ammoReloadRate * Time.deltaTime;
+                currentAmmo = Mathf.Clamp(currentAmmo, 0f, maxAmmo);
+            }
+
+            //CurrentAmmoRate 연산
+            if(maxAmmo == 0 || maxAmmo == Mathf.Infinity)
+            {
+                CurrentAmmoRate = 1f;
+            }
+            else
+            {
+                CurrentAmmoRate = currentAmmo / maxAmmo;
+            }                
+        }
+
         public void ShowWeapon(bool show)
         {
             weaponRoot.SetActive(show);

@@ -26,9 +26,17 @@ namespace Unity.FPS.UI
         }
         private void Start()
         {
+            WeaponController activeWeapon = playerWeaponManager.GetActiveWeapon();
+            if (activeWeapon)
+            {
+                AddWeapon(activeWeapon, playerWeaponManager.ActiveWeaponIndex);
+                SwitchWeapon(activeWeapon);
+            }
+
             //초기화
             playerWeaponManager.OnAddedWeapon += AddWeapon;
             playerWeaponManager.OnRemovedWeapon += RemoveWeapon;
+            playerWeaponManager.OnSwitchToWeapon += SwitchWeapon;
 
         }
         #endregion
@@ -38,14 +46,40 @@ namespace Unity.FPS.UI
         private void AddWeapon(WeaponController newWeapon, int weaponIndex)
         {
             AmmoCounter ammoCounter = Instantiate(ammoCounterPrefab, ammoPanel);
+            //UI 초기화
+            ammoCounter.Initialize(newWeapon, weaponIndex);
 
+            //UI 리스트에 추가
             ammoCounters.Add(ammoCounter);
         }
 
         //무기 제거시 UI 오브젝트 제거
         private void RemoveWeapon(WeaponController oldWeapon, int weaponIndex)
         {
+            //삭제될 AmmoCounter UI 찾기
+            int findCounterIndex = -1;
+            for (int i = 0; i < ammoCounters.Count; i++)
+            {
+                if (ammoCounters[i].WeaponCounterIndex == weaponIndex)
+                {
+                    findCounterIndex = i;
+                    //UI 오브젝트 킬
+                    Destroy(ammoCounters[i].gameObject);
+                    break;
+                }
+            }
+            //UI를 찾았다면 리스트에서도 제거
+            if(findCounterIndex >= 0)
+            {
+                ammoCounters.RemoveAt(findCounterIndex);
+            }
 
+        }
+
+        //무기 교체시 (ammoPanel) UI 리빌딩(갱신)
+        private void SwitchWeapon(WeaponController weapon)
+        {
+            UnityEngine.UI.LayoutRebuilder.ForceRebuildLayoutImmediate(ammoPanel);
         }
         #endregion
     }

@@ -196,7 +196,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.607
+  m_FillAmount: 0.592
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -212,6 +212,7 @@ GameObject:
   - component: {fileID: 645032500860478886}
   - component: {fileID: 645032500860478887}
   - component: {fileID: 7901869709085421051}
+  - component: {fileID: 6086729467265734151}
   m_Layer: 5
   m_Name: AmmoCounter
   m_TagString: Untagged
@@ -266,6 +267,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9750f9dea4b11e64fad8977dbd4c742b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponIndexText: {fileID: 2904203937318842817}
+  ammoFillAmount: {fileID: 645032500597732956}
+  canvasGroup: {fileID: 645032500860478887}
+  unSelectedOpacity: 0.5
+  ammoFillSharpness: 10
+  weaponSwitchSharpness: 10
+  forBackColorChange: {fileID: 6086729467265734151}
+--- !u!114 &6086729467265734151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645032500860478885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 661bd39e2de277b40a3a09c6cff64c0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forgroundImage: {fileID: 645032500597732956}
+  defaultForgroundColor: {r: 1, g: 1, b: 1, a: 1}
+  fullFlashForGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  backgroundImage: {fileID: 645032499974091307}
+  defaultBackgroundColor: {r: 0, g: 0, b: 0, a: 0.49019608}
+  emptyFlashBackGroundColor: {r: 1, g: 0, b: 0, a: 0.49019608}
+  fullValue: 1
+  emptyValue: 0
+  colorChangeSharpness: 5
 --- !u!1 &1644869328222790790
 GameObject:
   m_ObjectHideFlags: 0
